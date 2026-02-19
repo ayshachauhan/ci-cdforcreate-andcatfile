@@ -1,0 +1,52 @@
+name: CI_CD_CreateFileAndCat
+
+on:
+  push:
+
+jobs:
+  build:
+    name: Build and Create File
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout your repository to the runner
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Create and cat a file using shell scripting
+      - name: Run shell script to create file and cat it
+        run: |
+          echo "Creating example file..."
+          
+          # Create a shell script file
+          cat << 'EOF' > example.sh
+          #!/bin/bash
+          echo "Hello world"
+          echo "Current date: $(date)"
+          EOF
+          
+          
+          chmod +x example.sh
+          
+          
+          ./example.sh
+
+  
+          echo "Contents of example.sh:"
+          cat example.sh
+
+  docker-build:
+    name: Build Ubuntu Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+    
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      
+      - name: Build Docker image
+        run: |
+          echo "Building Ubuntu Docker image..."
+          docker build -t ubuntu-ci-image .
+
