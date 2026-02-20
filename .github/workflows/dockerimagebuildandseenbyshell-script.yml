@@ -14,10 +14,12 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Run shell-script to build docker image and display 
-        run:
+        run: |
           echo "build docker image"
           cat << 'EOF' > example.sh
-           #!/bin/bash
+           #!/bin/bash 
+           echo "This script runs after building Docker"
+           EOF
           docker build -t simple-image:latest .
           chmod +x example.sh
           ./example.sh
@@ -25,7 +27,7 @@ jobs:
        - name: show docker image list
          run:
            docker images
-           
+
 
 
 
