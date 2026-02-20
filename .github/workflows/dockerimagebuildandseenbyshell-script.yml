@@ -1,0 +1,35 @@
+name: simple shell-script that build docker image and run
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+   build:
+    name: build docker image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run shell-script to build docker image and display 
+        run:
+          echo "build docker image"
+          cat << 'EOF' > example.sh
+           #!/bin/bash
+          docker build -t simple-image:latest .
+          chmod +x example.sh
+          ./example.sh
+
+       - name: show docker image list
+         run:
+           docker images
+           
+
+
+
+
+
+
+
