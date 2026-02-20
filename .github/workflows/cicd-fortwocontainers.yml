@@ -1,0 +1,37 @@
+name: Two containers one is for wordpress and another is for database
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  build:
+    name: build container for wordpress
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+
+      - name: create container of wordress and map it to the directory wp
+        run:
+           echo " create wordpress container"
+           mkdir wp
+           docker run -d --name wordpress -p 80:80 -v /root/wp:/var/www/html wordpress
+
+  database-build:
+    name: build datatbase container
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: checkout code 
+        uses: actions/checkout@v3
+
+      - name: create container of database and map it to the directory of data
+        run:
+           echo "create database container"
+           mkdir data
+           docker run -d --name database -v /root/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=redhat -e MYSQL_DATABASE=team mysql
+
+
+
